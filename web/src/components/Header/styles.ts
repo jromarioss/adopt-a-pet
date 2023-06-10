@@ -18,6 +18,17 @@ export const HeaderContainer = styled.header`
     height: 52px;
   }
 
+  div {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .welcome {
+    font-size: 1.25rem;
+    color: ${(props) => props.theme.white};
+  }
+  
   .buttonLogin {
     color: ${(props) => props.theme.white};
     text-decoration: none;
@@ -49,7 +60,6 @@ export const HeaderContainer = styled.header`
 
 export const HeaderNav = styled.nav`
   display: flex;
-  flex: 1;
   justify-content: center;
   gap: 1.5rem;
 

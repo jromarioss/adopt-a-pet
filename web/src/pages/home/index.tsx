@@ -22,35 +22,34 @@ import { api } from '../../libs/axios'
 import { Carrousel  } from '../../components/Carrousel'
 import { PetsCards } from '../../components/PetsCards'
 import { WhyCards } from '../../components/WhyCards'
-import { PetPropsDTO } from '../../dto/petPropsDTO'
 
 import agroImg from '../../assets/img/image6.png'
 
+export interface PetPropsDTO {
+  id: string
+  name: string
+  city: string
+  pet_images: [{
+    id: string
+    image_name: string
+  }]
+}
+
 export function Home() {
   const [pets, setPets] = useState<PetPropsDTO[]>([])
-  const [loading, setLoading] = useState(false)
-
-  console.log("PETS", pets)
-
+  
   async function fetchPets() {
     try {
-      setLoading(true)
       const response = await api.get('/pets')
-      setPets(response.data)
+      setPets(response.data.pets)
     } catch(error) {
       console.log(error)
-    } finally {
-      setLoading(false)
     }
   }
   
   useEffect(() => {
     fetchPets()
-  }, [pets])
-
-  if (loading) {
-    return <p>loading</p>
-  }
+  }, [])
 
   return (
     <HomeContainer>
@@ -59,7 +58,7 @@ export function Home() {
       <CardsArea>
         <CardsAreaText>
           <h2>Leve a felicidade para o seu lar</h2>
-          <p>Nosso site está cheio de doguinhos e gatinhos ansiosos por uma família venha ver!</p>
+          <p>Nosso site está cheio de cachorrinhos e gatinhos ansiosos por uma família venha ver!</p>
         </CardsAreaText>
         <Cards>
         {
@@ -108,6 +107,8 @@ export function Home() {
           </Left>
         </ContactsInfo>
       </ContactsArea>
+
     </HomeContainer>
+
   )
 }

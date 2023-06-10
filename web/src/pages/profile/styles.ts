@@ -1,40 +1,22 @@
 import styled from 'styled-components'
 
-export const SignInContainer = styled.div`
+export const ProfileContainer = styled.div`
   height: calc(100vh - 100px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 
   h1 {
-    margin-bottom: 1rem;
-    color:  ${(props) => props.theme['gray-600']};
+    margin-top: 1rem;
+    color: ${(props) => props.theme['gray-600']};
   }
 
-  a {
-    color:  ${(props) => props.theme['gray-700']};
-    text-decoration: none;
-    text-align: center;
-  }
-`;
-
-export const Content = styled.div`
   form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  p {
-    margin-bottom: 0.5rem;
-  }
-
-  span {
-    display: block;
-    margin-top: 0.5rem;
-    color: ${(props) => props.theme['red-500']}
+    margin-block: 1rem;
   }
 
   input {
@@ -50,7 +32,7 @@ export const Content = styled.div`
     }
   }
 
-  button {
+  .buttonSave {
     all: unset;
     height: 50px;
     width: 300px;
@@ -67,4 +49,43 @@ export const Content = styled.div`
       background-color: ${(props) => props.theme['orange-100']};
     }
   }
-`;  
+`;
+
+export const FormInside = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+`;
+
+export const FormRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .inputAddress {
+    width: 215px;
+  }
+
+  .inputAddressNumber {
+    width: 70px;
+  }
+`;
+
+
+export const RightInside = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+`;
+
+export const FormLeft = styled.div`
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+`;

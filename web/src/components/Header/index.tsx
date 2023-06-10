@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Menu } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
@@ -6,9 +5,14 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { HeaderContainer, HeaderNav, MenuMobile } from './styles'
 
 import Logo from '../../assets/logo.png'
+import { useAuth } from '../../hooks/useAuth'
 
 export function Header() {
-  const [hasId, setHasId] = useState(false);
+  const { tokenIsValid, userInfo, signOut } = useAuth()
+
+  function handleSignOut() {
+    signOut()
+  }
 
   return (
     <HeaderContainer>
@@ -20,14 +24,22 @@ export function Header() {
         <NavLink to='/'>Quem somos</NavLink>
         <NavLink to='/'>Por que adotar</NavLink>
         <NavLink to='/'>Contatos</NavLink>
+        {tokenIsValid &&
+          <>
+            <NavLink to='/create'>Cadastrar pets</NavLink>
+            <NavLink to='/profile'>Perfil</NavLink>
+          </>
+        }
       </HeaderNav>
 
-      {hasId ?
-        <NavLink to='/'>Sair</NavLink>
+      {tokenIsValid ?
+        <div>
+          <p className='welcome'>Bem-vindo <strong>{userInfo?.name}</strong></p>
+          <NavLink to='/' className='buttonLogin' onClick={handleSignOut}>Sair</NavLink>
+        </div>
         :
         <NavLink to='/sessions' className='buttonLogin'>Entrar</NavLink>
       }
-
       
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
@@ -47,15 +59,31 @@ export function Header() {
                 <DropdownMenu.Item asChild>
                   <NavLink to='/'>Contatos</NavLink>
                 </DropdownMenu.Item>
+
+                {tokenIsValid &&
+                  <>
+                    <DropdownMenu.Item asChild>
+                      <NavLink to='/create'>Cadastrar pets</NavLink>
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item asChild>
+                      <NavLink to='/profile'>Perfil</NavLink>
+                    </DropdownMenu.Item>
+                  </>
+                }
               </div>
-              <DropdownMenu.Item asChild>
-                <NavLink to='/sessions' className='buttonLoginMobile'>Entrar</NavLink>
-              </DropdownMenu.Item>
+              {tokenIsValid ?
+                <DropdownMenu.Item asChild>
+                  <NavLink to='/' className='buttonLoginMobile' onClick={handleSignOut}>Sair</NavLink>
+                </DropdownMenu.Item>
+                :
+                <DropdownMenu.Item asChild>
+                  <NavLink to='/sessions' className='buttonLoginMobile'>Entrar</NavLink>
+                </DropdownMenu.Item>
+              }
             </MenuMobile>
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
-
     </HeaderContainer>
   )
 }
